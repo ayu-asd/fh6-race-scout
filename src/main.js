@@ -121,17 +121,22 @@ async function handleImage(img) {
       els.rawText.hidden = false;
       els.rawText.textContent = boxes.map((b) => `[${Math.round(b.cx)},${Math.round(b.cy)}] ${b.text}`).join('\n');
     }
-    let records = parsePanel(boxes);
-    if (records.length > 3) {
-      const withKm = records.filter((r) => r.km != null);
-      records = withKm.length >= 3 ? withKm.slice(0, 3) : records.slice(0, 3);
-    }
-    if (!records.length) {
+    const parsed = parsePanel(boxes);
+    if (!parsed.length) {
       hideProgress();
       els.results.innerHTML = '<p class="warn-note">未识别到比赛信息——请确认截图包含左侧比赛列表，或用下方手动查询。</p>';
       return;
     }
-    const matched = matchRecords(records, races, zhMap);
+    let matched = matchRecords(parsed, races, zhMap);
+    if (!matched.length) {
+      hideProgress();
+      els.results.innerHTML = '<p class="warn-note">未识别到比赛信息——请确认截图包含左侧比赛列表，或用下方手动查询。</p>';
+      return;
+    }
+    if (matched.length > 3) {
+      const withKm = matched.filter((m) => m.record.km != null);
+      matched = (withKm.length >= 3 ? withKm : matched).slice(0, 3);
+    }
     renderCards(matched, ms);
   } catch (e) {
     console.error(e);

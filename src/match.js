@@ -25,20 +25,22 @@ function lev(a, b) {
 const NAME_RE = /^[\u4e00-\u9fa5（）()·]{2,16}赛$/;
 const CJK_NAME_RE = /^[\u4e00-\u9fa5（）()·]{2,16}$/;
 const HEADER_RE = /正在加入|赛事报名|报名中$|乐玩/;
-const KM_RE = /(\d{1,2}(?:\.\d)?)\s*[千干辛][米毛]/;
+const KM_RE = /(\d{1,2}(?:\.\d)?)\s*[千干辛羊芊午][米毛]/;
 const LAPS_RE = /[-·.,，。]\s*(\d)\s*圈$|(\d)\s*圈$/;
-const STATUS_RE = /^(进行中|下一步|报名中|报名即将开始|已结束|已报名)$/;
+const STATUS_RE = /^(进行中|进行|下一步|下步|报名中|报名|已结束|已报名|报名即将开始)$/;
+const WEATHER_RE = /^((春|夏|秋|冬)季|夜[晚间]|白[天昼]|清晨|早晨|傍晚|黄昏|晴朗|睛朗|多云|阴天|阳天|雨天|小雨|大雨|雷雨|雨后|雪天?|雾天?|干爽|湿热|炎热|严寒|凉爽)$/;
 const NOISE_RE = /[a-zA-Z0-9\/：:点季第]|千米$/;
 
 export function classify(box) {
   const t = box.text.replace(/\s+/g, '');
   if (!t) return 'noise';
   if (STATUS_RE.test(t)) return 'status';
+  if (WEATHER_RE.test(t)) return 'noise';
   if (HEADER_RE.test(t)) return 'noise';
   const km = t.match(KM_RE);
   if (km) {
     const laps = t.match(LAPS_RE);
-    return { kind: 'km', km: parseFloat(km[1]), laps: laps ? parseInt(laps[1] ?? laps[2]) : null };
+    return { kind: 'km', km: parseFloat(km[1]), kmDot: km[1].includes('.'), laps: laps ? parseInt(laps[1] ?? laps[2]) : null };
   }
   if (NOISE_RE.test(t)) return 'noise';
   if (/^\d{1,2}$/.test(t)) return 'noise';
@@ -73,13 +75,14 @@ export function parsePanel(boxes) {
         close();
         cur = { name: c.name, km: null, laps: null, status: null, cy: box.cy, cx: box.cx, nameCy: box.cy };
       }
-    } else if (c.kind === 'km') {
+    } else     if (c.kind === 'km') {
       if (cur && sameLine(box.cy)) {
         cur.km = c.km;
+        cur.kmDot = c.kmDot;
         if (c.laps != null) cur.laps = c.laps;
       } else {
         close();
-        cur = { name: null, km: c.km, laps: c.laps ?? null, status: null, cy: box.cy, cx: box.cx, nameCy: box.cy };
+        cur = { name: null, km: c.km, kmDot: c.kmDot, laps: c.laps ?? null, status: null, cy: box.cy, cx: box.cx, nameCy: box.cy };
       }
     }
   }
@@ -93,8 +96,13 @@ export function scoreRace(record, race) {
   let kmScore;
   if (race.km == null || record.km == null) kmScore = 0.4;
   else {
-    const diff = Math.abs(record.km - race.km);
-    kmScore = diff <= 0.25 ? 1 - diff / 0.25 : diff <= 0.6 ? 0.15 : 0;
+    const candidates = record.kmDot || record.km < 10 ? [record.km] : [record.km, record.km / 10];
+    kmScore = Math.max(
+      ...candidates.map((v) => {
+        const diff = Math.abs(v - race.km);
+        return diff <= 0.25 ? 1 - diff / 0.25 : diff <= 0.6 ? 0.15 : 0;
+      })
+    );
   }
   let lapScore;
   if (!record.laps || !race.laps) lapScore = 0.4;
