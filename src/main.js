@@ -175,20 +175,22 @@ function renderCard(m) {
     card.innerHTML = `
       <div class="card-head">
         <div class="card-select">
-          <p class="hint">置信度不足（${(m.score * 100).toFixed(0)}%），请确认「${esc(m.record.name)}」是哪场比赛：</p>
-          <select>
-            <option value="">— 请选择 —</option>
+          <p class="hint">置信度不足（${(m.score * 100).toFixed(0)}%），请确认${m.record.name ? `「${esc(m.record.name)}」` : `第 ${m.record.order + 1} 行（未识别到名称，仅凭千米/圈数）`}是哪场比赛：</p>
+          <div class="cand-list">
             ${m.candidates
-              .map((c) => `<option value="${esc(c.race.image)}">${esc(c.race.zh || c.race.name)}｜${esc(c.race.name)}｜${esc(c.race.categoryZh)}｜${esc(c.race.km ?? '?')}km</option>`)
+              .map((c) => {
+                const why = c.race.km != null ? `${c.race.km}km${c.race.laps ? ` · ${c.race.laps}圈` : ''}` : '无数据';
+                return `<button class="cand-item" data-img="${esc(c.race.image)}"><span>${esc(c.race.zh || c.race.name)}</span><span class="ci-sub">${esc(c.race.categoryZh)} · ${esc(why)}</span></button>`;
+              })
               .join('')}
-          </select>
+          </div>
         </div>
       </div>`;
-    const sel = card.querySelector('select');
-    sel.addEventListener('change', () => {
-      if (!sel.value) return;
-      const race = races.find((r) => r.image === sel.value);
-      rerenderCard(card, race, m.record);
+    [...card.querySelectorAll('.cand-item')].forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const race = races.find((r) => r.image === btn.dataset.img);
+        rerenderCard(card, race, m.record);
+      });
     });
     return card;
   }
@@ -346,4 +348,9 @@ els.sampleModal.addEventListener('click', (e) => {
 (async () => {
   await loadData();
   races.forEach((r) => (r.zh = zhMap?.[r.image]?.zh ?? null));
+  window.__fh6DemoLowConfidence = (records) => {
+    els.previewWrap.hidden = true;
+    els.results.hidden = false;
+    renderCards(matchRecords(records ?? [{ name: null, km: 7.9, laps: 3, status: '报名中', order: 0 }], races, zhMap), 0);
+  };
 })();
