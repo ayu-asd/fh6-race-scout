@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FH6 赛事速览 · 赛道图查询</title>
+    <script>window.Module = {};</script>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>FH6 赛事速览</h1>
+      <div class="header-right">
+        <span id="engine-status" class="status-dot">模型未加载</span>
+        <button id="debug-toggle" class="ghost" title="显示裁剪区域和识别原文">调试</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="manual-wrap">
+        <h2>手动查询</h2>
+        <div class="manual-row">
+          <div class="manual-box">
+            <input id="manual-search" placeholder="输入赛事名（支持中文/英文/分类），也可直接 Ctrl+V 粘贴截图" autocomplete="off" />
+            <div id="manual-results" hidden></div>
+          </div>
+          <button id="sample-btn" class="ghost" title="查看示例：什么截图能用">示例截图</button>
+        </div>
+      </section>
+
+      <section id="upload-wrap">
+        <input type="file" id="file-input" name="file-input" accept="image/*" />
+        <p class="dz-hint">在游戏赛事报名界面按 Win+Shift+S 截取全屏（需包含左侧比赛列表）</p>
+      </section>
+
+      <section id="preview-wrap" hidden>
+        <div class="preview-head">
+          <span id="shot-info"></span>
+          <button id="reset-btn" class="ghost">重新粘贴</button>
+        </div>
+        <div class="canvas-holder"><canvas id="preview"></canvas></div>
+        <div id="raw-text" class="raw-text" hidden></div>
+      </section>
+
+      <section id="results" hidden></section>
+    </main>
+
+    <div id="sample-modal" hidden>
+      <div class="sample-inner">
+        <button id="sample-close" class="ghost">关闭 ✕</button>
+        <img id="sample-img" src="./sample-screenshot.png" alt="示例：赛事报名界面截图" />
+      </div>
+    </div>
+    <div id="progress" hidden><div class="spinner"></div><span id="progress-text">处理中…</span></div>
+    <div id="toast" hidden></div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

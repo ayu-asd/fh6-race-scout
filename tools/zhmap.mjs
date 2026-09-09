@@ -1,0 +1,120 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const outPath = join(import.meta.dirname, '..', 'public', 'data', 'zh_map.json');
+
+// confidence: verified=玩家游戏内实锤 | source=游民星空地图数据 | conflict=多来源分歧已由玩家裁决
+const M = {
+  // ---- 街头赛 (15) ---- [玩家裁决: 采用右列]
+  RaceCedarRun: { zh: '雪松竞速', alt: '杉树奔袭赛', confidence: 'verified' },
+  RaceDaikokuChase: { zh: '大黑追逐赛', confidence: 'source' },
+  RaceFestivalChase: { zh: '嘉年华追逐赛', confidence: 'source' },
+  RaceHokubuAscent: { zh: '北部上坡赛', alt: '北部爬坡赛', confidence: 'verified' },
+  RaceKitaIne: { zh: '北伊根', confidence: 'source' },
+  RaceMatsumiClimb: { zh: '六见爬坡赛', confidence: 'source' },
+  RaceMinamiChase: { zh: '南区追逐赛', alt: '南野追逐赛', confidence: 'verified' },
+  RaceNachiRun: { zh: '那智竞速', alt: '那智奔袭赛', confidence: 'verified' },
+  RaceNorikuraDescent: { zh: '乘鞍下坡赛', confidence: 'source' },
+  RaceOkishinaimuraRun: { zh: '兴志内村竞速', alt: '冲品村奔袭赛', confidence: 'verified' },
+  RaceRainbowBridgeDescent: { zh: '彩虹桥下坡赛', confidence: 'source' },
+  RaceRiverDescent: { zh: '河流下坡赛', confidence: 'source' },
+  RaceShimanoyamaCharge: { zh: '霜山冲刺赛', alt: '霜山冲锋赛', confidence: 'verified' },
+  RaceSunflowerCharge: { zh: '向日葵攀爬赛', alt: '向日葵冲锋赛', confidence: 'verified' },
+  RaceTokyoCityDocksCharge: { zh: '东京码头冲锋赛', alt: '城市码头越野环道赛', confidence: 'verified' },
+  // ---- 公路赛 (20) ----
+  RaceCoastlineSprint: { zh: '海岸线冲刺赛', confidence: 'source' },
+  RaceDaikokuCircuit: { zh: '大黑环道赛', confidence: 'source' },
+  RaceElectricTownCircuit: { zh: '电器街环道赛', confidence: 'source' },
+  RaceFestivalSprint: { zh: '嘉年华冲刺赛', confidence: 'source' },
+  RaceHighwayCircuit: { zh: '高速公路环道赛', confidence: 'source' },
+  RaceHokubuCircuit: { zh: '北部环道赛', confidence: 'source' },
+  RaceIrokawaCircuit: { zh: '色川环道赛', confidence: 'source' },
+  RaceItoSprint: { zh: '伊东冲刺赛', confidence: 'source' },
+  RaceLegendIslandCircuit: { zh: '传奇岛环道赛', confidence: 'source' },
+  'RaceNarai-JukuCircuit': { zh: '奈良井宿环道赛', confidence: 'source' },
+  RaceSattaSprint: { zh: '萨埵冲刺赛', confidence: 'source' },
+  RaceSeasideParkSprint: { zh: '海滨公园冲刺赛', confidence: 'source' },
+  RaceShikisaiSprint: { zh: '四季彩冲刺赛', confidence: 'source' },
+  RaceShimanoyamaCircuit: { zh: '霜山环道赛', confidence: 'source' },
+  RaceShimanoyamaSprint: { zh: '霜山冲刺赛', confidence: 'source' },
+  RaceShirakawaCircuit: { zh: '白川环道赛', confidence: 'source' },
+  RaceTateyamaKurobeSprint: { zh: '立山黑部冲刺赛', confidence: 'source' },
+  RaceColossus: { zh: '迎战巨汉', alt: '巨像/巨漢(繁中), 环首都高 37.7km', confidence: 'verified' },
+  RaceGoliath: { zh: '歌莉娅', alt: '歌利亚(攻略写法), 环岛 85.5km', confidence: 'verified' },
+  RaceVenusSprint: { zh: '维纳斯冲刺赛', confidence: 'source' },
+  // ---- 峠道赛 (5) ----
+  RaceArashiyamaTakao: { zh: '岚山高雄', confidence: 'source' },
+  RaceBandaiAzuma: { zh: '磐梯吾妻', confidence: 'source' },
+  RaceHakoneNanamagari: { zh: '箱根七曲', confidence: 'source' },
+  RaceMtHaruna: { zh: '榛名山', confidence: 'source' },
+  RaceNorikuraSkyline: { zh: '乘鞍天际线', confidence: 'source' },
+  // ---- 直线加速赛 (3) ----
+  RaceHorizonFestivalDragStrip: { zh: '地平线嘉年华直线加速赛', confidence: 'verified' },
+  RaceIrokawaSpaceCenterDragStrip: { zh: '色川航天中心直线加速赛', confidence: 'verified' },
+  RaceItoAirfieldDragStrip: { zh: '伊东机场直线加速赛', confidence: 'verified' },
+  // ---- 泥地竞速赛 (20) ----
+  RaceAirfieldTrail: { zh: '机场径走赛', confidence: 'source' },
+  RaceBambooForestScramble: { zh: '竹林攀爬赛', confidence: 'source' },
+  RaceCherryFieldTrail: { zh: '樱桃园径走赛', confidence: 'source' },
+  RaceChiheisenScramble: { zh: '地平线攀爬赛', confidence: 'verified' },
+  RaceHirosakiScramble: { zh: '弘前攀爬赛', confidence: 'verified' },
+  RaceHokubuTrail: { zh: '北部径走赛', confidence: 'source' },
+  RaceHorizonStadiumScramble: { zh: '地平线体育场攀爬赛', confidence: 'source' },
+  RaceIneScramble: { zh: '伊根攀爬赛', confidence: 'source' },
+  RaceItoTrail: { zh: '伊东径道赛', alt: '游民星空数据作"伊东径走赛"', confidence: 'verified' },
+  RaceKawazuNanadaruScramble: { zh: '河津七泷攀爬赛', confidence: 'source' },
+  'RaceKinkaku-jiTrail': { zh: '金阁寺径走赛', confidence: 'source' },
+  RaceLegendIslandTrail: { zh: '传奇岛径走赛', confidence: 'source' },
+  RaceNukabiraTrail: { zh: '糠平径走赛', confidence: 'source' },
+  RaceOyashirazuTrail: { zh: '亲不知径走赛', confidence: 'source' },
+  RaceSekibeScramble: { zh: '石部攀爬赛', confidence: 'source' },
+  RaceSotoyamaScramble: { zh: '外山攀爬赛', confidence: 'source' },
+  RaceSunflowerScramble: { zh: '向日葵攀爬赛', confidence: 'source' },
+  RaceTaiyakiScramble: { zh: '鲷鱼烧攀爬赛', confidence: 'source' },
+  RaceTakashiroTrail: { zh: '高城径走赛', confidence: 'source' },
+  RaceGauntlet: { zh: '苦行赛', alt: '险途/挑战赛(攻略译名), 泥地拉力 30.1km', confidence: 'verified' },
+  // ---- 越野赛 (18) ----
+  RaceCityDocksCrossCountryCircuit: { zh: '城市码头越野环道赛', alt: '索道疾驰?', confidence: 'verified' },
+  RaceEdogawaCrossCountryCircuit: { zh: '江户川越野环道赛', confidence: 'source' },
+  RaceIzuCrossCountry: { zh: '伊豆越野赛', confidence: 'source' },
+  RaceLegendIslandCrossCountryCircuit: { zh: '传奇岛越野环道赛', confidence: 'source' },
+  RaceNanganCrossCountryCircuit: { zh: '南岸越野环道赛', confidence: 'verified' },
+  RaceNaruoCrossCountryCircuit: { zh: '鸣尾越野环道赛', confidence: 'source' },
+  RaceOkaCrossCountryCircuit: { zh: '冈城越野环道赛', confidence: 'source' },
+  'RaceRuriko-jiCrossCountry': { zh: '琉璃光寺越野赛', confidence: 'source' },
+  RaceShimanoyamaCrossCountry: { zh: '霜山越野赛', confidence: 'source' },
+  RaceShinjukuGyoenCrossCountry: { zh: '新宿御苑越野赛', confidence: 'source' },
+  RaceSnowForestCrossCountryCircuit: { zh: '雪林越野环道赛', confidence: 'source' },
+  RaceSoniHighlandsCrossCountry: { zh: '曾尔高地越野赛', confidence: 'source' },
+  RaceTakashiroCrossCountry: { zh: '高城越野赛', confidence: 'source' },
+  RaceTateyamaAlpineCrossCountry: { zh: '立山高山越野赛', confidence: 'source' },
+  RaceTempleCrossCountry: { zh: '大佛寺越野赛', confidence: 'source' },
+  RaceTitan: { zh: '巨人对决', alt: '泰坦(攻略译名), 越野 23.2km', confidence: 'verified' },
+  RaceWindFarmCrossCountry: { zh: '风力发电场越野赛', confidence: 'source' },
+  RaceYahikoyamaCrossCountry: { zh: '弥彦山越野赛', confidence: 'source' },
+  // ---- 腕带赛 (7) ----
+  RaceFlightClub: { zh: '飞行俱乐部', confidence: 'verified' },
+  RaceHorizonInvitational: { zh: '地平线邀请赛', confidence: 'verified' },
+  RaceHorizonLegend: { zh: '地平线传奇', alt: '地平线传奇赛', confidence: 'verified' },
+  RaceLaunchControl: { zh: '起跑控制', confidence: 'verified' },
+  RaceMechMyDay: { zh: '机甲爽翻天', confidence: 'verified' },
+  RaceOffPiste: { zh: '越野滑雪', confidence: 'verified' },
+  RacePierPressure: { zh: '码头压力赛', confidence: 'verified' },
+};
+
+await writeFile(
+  outPath,
+  JSON.stringify(
+    {
+      note: 'ForzaLabs race image key -> 游戏内简中名。四个地平线巨献: 歌莉娅(环岛)/迎战巨汉(环首都高)/苦行赛(泥地拉力)/巨人对决(越野), 经玩家游戏内核实。游戏内还有 ForzaLabs 未收录比赛(曾尔环道赛/东京铁道冲刺赛/瀑布径走赛/计时赛x5/序章等), 识别到时会出候选下拉。',
+      map: M,
+    },
+    null,
+    2
+  ),
+  'utf8'
+);
+
+const counts = {};
+for (const v of Object.values(M)) counts[v.confidence] = (counts[v.confidence] ?? 0) + 1;
+console.log(`zh_map.json: ${Object.keys(M).length} entries`, JSON.stringify(counts));

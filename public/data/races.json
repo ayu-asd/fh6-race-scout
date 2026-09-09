@@ -1,0 +1,922 @@
+{
+  "source": "forza.labsgg.com/all-race-tracks",
+  "categories": [
+    {
+      "en": "Street Races",
+      "zh": "街头赛",
+      "count": 15
+    },
+    {
+      "en": "Road Races",
+      "zh": "公路赛",
+      "count": 20
+    },
+    {
+      "en": "Touge Races",
+      "zh": "峠道赛",
+      "count": 5
+    },
+    {
+      "en": "Drag Races",
+      "zh": "直线加速赛",
+      "count": 3
+    },
+    {
+      "en": "Dirt Races",
+      "zh": "泥地竞速赛",
+      "count": 20
+    },
+    {
+      "en": "Cross Country Races",
+      "zh": "越野赛",
+      "count": 18
+    },
+    {
+      "en": "Wristband Events",
+      "zh": "腕带赛",
+      "count": 7
+    }
+  ],
+  "races": [
+    {
+      "name": "Cedar Run Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.2,
+      "km": 6.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceCedarRun"
+    },
+    {
+      "name": "Daikoku Chase Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.2,
+      "km": 6.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceDaikokuChase"
+    },
+    {
+      "name": "Festival Chase Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.1,
+      "km": 6.6,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceFestivalChase"
+    },
+    {
+      "name": "Hokubu Ascent Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.2,
+      "km": 6.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceHokubuAscent"
+    },
+    {
+      "name": "Kita Ine Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.1,
+      "km": 6.6,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceKitaIne"
+    },
+    {
+      "name": "Matsumi Climb Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.6,
+      "km": 7.4,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceMatsumiClimb"
+    },
+    {
+      "name": "Minami Chase Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4.6,
+      "km": 7.4,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceMinamiChase"
+    },
+    {
+      "name": "Nachi Run Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 3.9,
+      "km": 6.3,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceNachiRun"
+    },
+    {
+      "name": "Norikura Descent Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceNorikuraDescent"
+    },
+    {
+      "name": "Okishinaimura Run Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 3.2,
+      "km": 5.1,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceOkishinaimuraRun"
+    },
+    {
+      "name": "Rainbow Bridge Descent Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 5.3,
+      "km": 8.5,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceRainbowBridgeDescent"
+    },
+    {
+      "name": "River Descent Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 3.8,
+      "km": 6.1,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceRiverDescent"
+    },
+    {
+      "name": "Shimanoyama Charge Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 5.2,
+      "km": 8.4,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceShimanoyamaCharge"
+    },
+    {
+      "name": "Sunflower Charge Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 3.8,
+      "km": 6.1,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceSunflowerCharge"
+    },
+    {
+      "name": "Tokyo City Docks Charge Street Race",
+      "category": "Street Races",
+      "categoryZh": "街头赛",
+      "mi": 4,
+      "km": 6.4,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceTokyoCityDocksCharge"
+    },
+    {
+      "name": "Coastline Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 5,
+      "km": 8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceCoastlineSprint"
+    },
+    {
+      "name": "Daikoku Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 3.3,
+      "km": 5.3,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceDaikokuCircuit"
+    },
+    {
+      "name": "Electric Town Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 5.5,
+      "km": 8.9,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceElectricTownCircuit"
+    },
+    {
+      "name": "Festival Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.9,
+      "km": 7.9,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceFestivalSprint"
+    },
+    {
+      "name": "Highway Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 8.7,
+      "km": 14,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceHighwayCircuit"
+    },
+    {
+      "name": "Hokubu Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.7,
+      "km": 7.6,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceHokubuCircuit"
+    },
+    {
+      "name": "Irokawa Circuit Road Race",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 3.5,
+      "km": 5.6,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceIrokawaCircuit"
+    },
+    {
+      "name": "Ito Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 5.8,
+      "km": 9.3,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceItoSprint"
+    },
+    {
+      "name": "Legend Island Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 8.8,
+      "km": 14.2,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceLegendIslandCircuit"
+    },
+    {
+      "name": "Narai-Juku Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.4,
+      "km": 7.1,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceNarai-JukuCircuit"
+    },
+    {
+      "name": "Satta Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 5.1,
+      "km": 8.2,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceSattaSprint"
+    },
+    {
+      "name": "Seaside Park Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.5,
+      "km": 7.2,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceSeasideParkSprint"
+    },
+    {
+      "name": "Shikisai Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.8,
+      "km": 7.7,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceShikisaiSprint"
+    },
+    {
+      "name": "Shimanoyama Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 3.4,
+      "km": 5.5,
+      "laps": 5,
+      "series": "Horizon Festival",
+      "image": "RaceShimanoyamaCircuit"
+    },
+    {
+      "name": "Shimanoyama Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4,
+      "km": 6.4,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceShimanoyamaSprint"
+    },
+    {
+      "name": "Shirakawa Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4,
+      "km": 6.4,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceShirakawaCircuit"
+    },
+    {
+      "name": "Tateyama Kurobe Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 3.8,
+      "km": 6.1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTateyamaKurobeSprint"
+    },
+    {
+      "name": "The Colossus",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 23.4,
+      "km": 37.7,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceColossus"
+    },
+    {
+      "name": "The Goliath",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 53.1,
+      "km": 85.5,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceGoliath"
+    },
+    {
+      "name": "Venus Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 5,
+      "km": 8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceVenusSprint"
+    },
+    {
+      "name": "Arashiyama Takao Touge Race",
+      "category": "Touge Races",
+      "categoryZh": "峠道赛",
+      "mi": 3,
+      "km": 4.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceArashiyamaTakao"
+    },
+    {
+      "name": "Bandai Azuma Touge Race",
+      "category": "Touge Races",
+      "categoryZh": "峠道赛",
+      "mi": 2.9,
+      "km": 4.7,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceBandaiAzuma"
+    },
+    {
+      "name": "Hakone Nanamagari Touge Race",
+      "category": "Touge Races",
+      "categoryZh": "峠道赛",
+      "mi": null,
+      "km": null,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceHakoneNanamagari"
+    },
+    {
+      "name": "Mt. Haruna Touge Race",
+      "category": "Touge Races",
+      "categoryZh": "峠道赛",
+      "mi": 4.3,
+      "km": 6.9,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceMtHaruna"
+    },
+    {
+      "name": "Norikura Skyline Touge Race",
+      "category": "Touge Races",
+      "categoryZh": "峠道赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 1,
+      "series": "Discover Japan",
+      "image": "RaceNorikuraSkyline"
+    },
+    {
+      "name": "Horizon Festival Drag Strip",
+      "category": "Drag Races",
+      "categoryZh": "直线加速赛",
+      "mi": 0.6,
+      "km": 1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceHorizonFestivalDragStrip"
+    },
+    {
+      "name": "Irokawa Space Center Drag Strip",
+      "category": "Drag Races",
+      "categoryZh": "直线加速赛",
+      "mi": 0.2,
+      "km": 0.3,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceIrokawaSpaceCenterDragStrip"
+    },
+    {
+      "name": "Ito Airfield Drag Strip",
+      "category": "Drag Races",
+      "categoryZh": "直线加速赛",
+      "mi": 0.5,
+      "km": 0.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceItoAirfieldDragStrip"
+    },
+    {
+      "name": "Airfield Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 4.2,
+      "km": 6.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceAirfieldTrail"
+    },
+    {
+      "name": "Bamboo Forest Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 9.3,
+      "km": 15,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceBambooForestScramble"
+    },
+    {
+      "name": "Cherry Field Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 4.5,
+      "km": 7.2,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceCherryFieldTrail"
+    },
+    {
+      "name": "Chiheisen Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 4.9,
+      "km": 7.9,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceChiheisenScramble"
+    },
+    {
+      "name": "Hirosaki Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 5.1,
+      "km": 8.2,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceHirosakiScramble"
+    },
+    {
+      "name": "Hokubu Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceHokubuTrail"
+    },
+    {
+      "name": "Horizon Stadium Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 7.3,
+      "km": 11.7,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceHorizonStadiumScramble"
+    },
+    {
+      "name": "Ine Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 5.7,
+      "km": 9.2,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceIneScramble"
+    },
+    {
+      "name": "Ito Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 4.4,
+      "km": 7.1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceItoTrail"
+    },
+    {
+      "name": "Kawazu Nanadaru Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 7.8,
+      "km": 12.6,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceKawazuNanadaruScramble"
+    },
+    {
+      "name": "Kinkaku-ji Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.4,
+      "km": 5.5,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceKinkaku-jiTrail"
+    },
+    {
+      "name": "Legend Island Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.3,
+      "km": 5.3,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceLegendIslandTrail"
+    },
+    {
+      "name": "Nukabira Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 5,
+      "km": 8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceNukabiraTrail"
+    },
+    {
+      "name": "Oyashirazu Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.2,
+      "km": 5.1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceOyashirazuTrail"
+    },
+    {
+      "name": "Sekibe Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 4,
+      "km": 6.4,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceSekibeScramble"
+    },
+    {
+      "name": "Sotoyama Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 5.5,
+      "km": 8.9,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceSotoyamaScramble"
+    },
+    {
+      "name": "Sunflower Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 5.3,
+      "km": 8.5,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceSunflowerScramble"
+    },
+    {
+      "name": "Taiyaki Scramble",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 6.7,
+      "km": 10.8,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceTaiyakiScramble"
+    },
+    {
+      "name": "Takashiro Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTakashiroTrail"
+    },
+    {
+      "name": "The Gauntlet",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 18.7,
+      "km": 30.1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceGauntlet"
+    },
+    {
+      "name": "City Docks Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.7,
+      "km": 7.6,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceCityDocksCrossCountryCircuit"
+    },
+    {
+      "name": "Edogawa Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 5.7,
+      "km": 9.2,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceEdogawaCrossCountryCircuit"
+    },
+    {
+      "name": "Izu Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.8,
+      "km": 7.7,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceIzuCrossCountry"
+    },
+    {
+      "name": "Legend Island Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 6.2,
+      "km": 10,
+      "laps": 2,
+      "series": "Horizon Festival",
+      "image": "RaceLegendIslandCrossCountryCircuit"
+    },
+    {
+      "name": "Nangan Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 5.4,
+      "km": 8.7,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceNanganCrossCountryCircuit"
+    },
+    {
+      "name": "Naruo Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 5.6,
+      "km": 9,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceNaruoCrossCountryCircuit"
+    },
+    {
+      "name": "Oka Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 7.2,
+      "km": 11.6,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceOkaCrossCountryCircuit"
+    },
+    {
+      "name": "Ruriko-ji Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.1,
+      "km": 6.6,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceRuriko-jiCrossCountry"
+    },
+    {
+      "name": "Shimanoyama Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4,
+      "km": 6.4,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceShimanoyamaCrossCountry"
+    },
+    {
+      "name": "Shinjuku Gyoen Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 3.7,
+      "km": 6,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceShinjukuGyoenCrossCountry"
+    },
+    {
+      "name": "Snow Forest Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 6.6,
+      "km": 10.6,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceSnowForestCrossCountryCircuit"
+    },
+    {
+      "name": "Soni Highlands Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.9,
+      "km": 7.9,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceSoniHighlandsCrossCountry"
+    },
+    {
+      "name": "Takashiro Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 5.5,
+      "km": 8.9,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTakashiroCrossCountry"
+    },
+    {
+      "name": "Tateyama Alpine Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.9,
+      "km": 7.9,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTateyamaAlpineCrossCountry"
+    },
+    {
+      "name": "Temple Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 4.4,
+      "km": 7.1,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTempleCrossCountry"
+    },
+    {
+      "name": "The Titan",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 14.4,
+      "km": 23.2,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTitan"
+    },
+    {
+      "name": "Wind Farm Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 3.9,
+      "km": 6.3,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceWindFarmCrossCountry"
+    },
+    {
+      "name": "Yahikoyama Cross Country",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 3.9,
+      "km": 6.3,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceYahikoyamaCrossCountry"
+    },
+    {
+      "name": "Flight Club",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 5.4,
+      "km": 8.7,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceFlightClub"
+    },
+    {
+      "name": "Horizon Invitational",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 4.8,
+      "km": 7.7,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceHorizonInvitational"
+    },
+    {
+      "name": "Horizon Legend",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 7.2,
+      "km": 11.6,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceHorizonLegend"
+    },
+    {
+      "name": "Launch Control",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 5,
+      "km": 8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceLaunchControl"
+    },
+    {
+      "name": "Mech My Day",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 5.3,
+      "km": 8.5,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceMechMyDay"
+    },
+    {
+      "name": "Off Piste",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 5.2,
+      "km": 8.4,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceOffPiste"
+    },
+    {
+      "name": "Pier Pressure",
+      "category": "Wristband Events",
+      "categoryZh": "腕带赛",
+      "mi": 4.9,
+      "km": 7.9,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RacePierPressure"
+    }
+  ]
+}
