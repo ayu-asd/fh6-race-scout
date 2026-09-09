@@ -8,28 +8,54 @@ export function getEngineState() {
   return engineState;
 }
 
+let failCurrentInit = null;
+
+export function failEngineNow() {
+  failCurrentInit?.(new Error('webgl 上下文丢失'));
+}
+
+const withTimeout = (p, ms, msg) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(msg)), ms))]);
+
 export function loadEngine(onState) {
-  if (!enginePromise) {
-    engineState = 'loading';
-    onState?.('loading');
-    enginePromise = paddleOcr
-      .init(`${BASE}models/det/model.json`, `${BASE}models/rec/model.json`)
-      .then(() => {
+  if (enginePromise) return enginePromise;
+  engineState = 'loading';
+  onState?.('loading');
+  enginePromise = (async () => {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        await new Promise((res, rej) => {
+          failCurrentInit = rej;
+          withTimeout(paddleOcr.init(`${BASE}models/det/model.json`, `${BASE}models/rec/model.json`), 60000, '模型初始化超时').then(res, rej);
+        });
+        failCurrentInit = null;
         engineState = 'ready';
         onState?.('ready');
-      })
-      .catch((err) => {
-        engineState = 'error';
-        enginePromise = null;
-        throw err;
-      });
-  }
+        return;
+      } catch (err) {
+        failCurrentInit = null;
+        if (attempt >= 3) {
+          engineState = 'error';
+          enginePromise = null;
+          throw err;
+        }
+        console.warn(`模型初始化失败（第 ${attempt} 次），正在重试…`, err);
+        await new Promise((r) => setTimeout(r, 1200 * attempt));
+      }
+    }
+  })();
   return enginePromise;
 }
 
 export async function recognize(img) {
   await loadEngine();
-  const res = await paddleOcr.recognize(img);
+  let res;
+  try {
+    res = await withTimeout(paddleOcr.recognize(img), 45000, 'OCR 超时（可能 WebGL 上下文丢失）');
+  } catch (err) {
+    enginePromise = null;
+    if (engineState === 'ready') engineState = 'error';
+    throw err;
+  }
   const text = res?.text ?? [];
   const points = res?.points ?? [];
   const boxes = [];

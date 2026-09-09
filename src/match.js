@@ -25,10 +25,10 @@ function lev(a, b) {
 const NAME_RE = /^[\u4e00-\u9fa5（）()·]{2,16}赛$/;
 const CJK_NAME_RE = /^[\u4e00-\u9fa5（）()·]{2,16}$/;
 const HEADER_RE = /正在加入|赛事报名|报名中$|乐玩/;
-const KM_RE = /(\d{1,2}(?:\.\d)?)\s*[千干辛羊芊午][米毛]/;
+const KM_RE = /(\d{1,2}(?:\.\d)?)\s*[千干辛羊芊午年][米毛]/;
 const LAPS_RE = /[-·.,，。]\s*(\d)\s*圈$|(\d)\s*圈$/;
 const STATUS_RE = /^(进行中|进行|下一步|下步|报名中|报名|已结束|已报名|报名即将开始)$/;
-const WEATHER_RE = /^((春|夏|秋|冬)季|夜[晚间]|白[天昼]|清晨|早晨|傍晚|黄昏|晴朗|睛朗|多云|阴天|阳天|雨天|小雨|大雨|雷雨|雨后|雪天?|雾天?|干爽|湿热|炎热|严寒|凉爽)$/;
+const WEATHER_RE = /^((春|夏|秋|冬)季|夜[晚间]|白[天昼]|清晨|早晨|上午|中午|下午|傍[晚清早]|黄昏|拂晓|黎明|日出|日落|午[夜后]?|深夜|正午|晴朗|睛朗|多云|阴天|阳天|雨天|小雨|大雨|暴雨|阵[雨雨]|雷[阵雨]*|降水|弱降水|强降水|雨后|雪天?|雾天?|干爽|湿热|炎热|严寒|凉爽)$/;
 const NOISE_RE = /[a-zA-Z0-9\/：:点季第]|千米$/;
 
 export function classify(box) {
@@ -40,7 +40,12 @@ export function classify(box) {
   const km = t.match(KM_RE);
   if (km) {
     const laps = t.match(LAPS_RE);
-    return { kind: 'km', km: parseFloat(km[1]), kmDot: km[1].includes('.'), laps: laps ? parseInt(laps[1] ?? laps[2]) : null };
+    const prefix = t.slice(0, km.index).replace(/[（）()·]/g, '');
+    const name =
+      (NAME_RE.test(prefix) || CJK_NAME_RE.test(prefix)) && !STATUS_RE.test(prefix) && !HEADER_RE.test(prefix) && !WEATHER_RE.test(prefix)
+        ? prefix
+        : null;
+    return { kind: 'km', km: parseFloat(km[1]), kmDot: km[1].includes('.'), laps: laps ? parseInt(laps[1] ?? laps[2]) : null, name };
   }
   if (NOISE_RE.test(t)) return 'noise';
   if (/^\d{1,2}$/.test(t)) return 'noise';
@@ -75,8 +80,13 @@ export function parsePanel(boxes) {
         close();
         cur = { name: c.name, km: null, laps: null, status: null, cy: box.cy, cx: box.cx, nameCy: box.cy };
       }
-    } else     if (c.kind === 'km') {
-      if (cur && sameLine(box.cy)) {
+    } else if (c.kind === 'km') {
+      const sameRowName = c.name != null && cur && cur.name == null && sameLine(box.cy);
+      if (c.name != null && !sameRowName) {
+        close();
+        cur = { name: c.name, km: c.km, kmDot: c.kmDot, laps: c.laps ?? null, status: null, cy: box.cy, cx: box.cx, nameCy: box.cy };
+      } else if (cur && sameLine(box.cy)) {
+        if (sameRowName) cur.name = c.name;
         cur.km = c.km;
         cur.kmDot = c.kmDot;
         if (c.laps != null) cur.laps = c.laps;

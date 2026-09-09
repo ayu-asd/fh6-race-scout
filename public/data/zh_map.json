@@ -97,6 +97,11 @@
       "zh": "色川环道赛",
       "confidence": "source"
     },
+    "RaceSoniCircuit": {
+      "zh": "曾尔环道赛",
+      "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km 3圈",
+      "confidence": "verified"
+    },
     "RaceItoSprint": {
       "zh": "伊东冲刺赛",
       "confidence": "source"

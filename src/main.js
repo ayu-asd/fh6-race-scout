@@ -16,6 +16,7 @@ const els = {
   preview: $('preview'), shotInfo: $('shot-info'), resetBtn: $('reset-btn'),
   results: $('results'), progress: $('progress'), progressText: $('progress-text'),
   toast: $('toast'), engineStatus: $('engine-status'), debugToggle: $('debug-toggle'),
+  uploadBlock: $('upload-block'),
   rawText: $('raw-text'), manualWrap: $('manual-wrap'), manualSearch: $('manual-search'),
   manualResults: $('manual-results'),
   sampleModal: $('sample-modal'), sampleBtn: $('sample-btn'), sampleClose: $('sample-close'),
@@ -32,6 +33,11 @@ const pond = createPond(els.fileInput, {
   labelTapToCancel: '点击取消',
   onaddfile: async (err, item) => {
     if (err) return;
+    if (engineStateUI === 'loading') {
+      showToast('模型加载中，请稍候再试', true);
+      pond.removeFiles();
+      return;
+    }
     const f = item.file;
     setTimeout(() => pond.removeFiles(), 60);
     handleImage(await fileToImage(f));
@@ -52,10 +58,19 @@ function showToast(msg, isError = false) {
   showToast._t = setTimeout(() => (els.toast.hidden = true), isError ? 5000 : 2600);
 }
 
+let engineStateUI = 'idle';
+
 function setEngineStatus(state) {
+  engineStateUI = state;
   els.engineStatus.textContent = { idle: '模型未加载', loading: '模型加载中…', ready: '● 识别引擎就绪', error: '模型加载失败' }[state] ?? state;
   els.engineStatus.className = `status-dot ${state}`;
+  els.uploadBlock.hidden = state === 'ready' || state === 'error';
 }
+
+els.engineStatus.addEventListener('click', () => {
+  if (engineStateUI !== 'error') return;
+  getOcr().then((o) => o.loadEngine(setEngineStatus)).catch((e) => showToast(`模型加载失败: ${e.message}`, true));
+});
 
 getOcr().then((o) => o.loadEngine(setEngineStatus)).catch((e) => showToast(`模型加载失败: ${e.message}`, true));
 
@@ -107,7 +122,7 @@ async function handleImage(img) {
     return;
   }
 
-  showProgress('OCR 识别中（首次较慢，请稍候）…');
+  showProgress('OCR 识别中…');
   await new Promise((r) => setTimeout(r, 50));
   try {
     const panel = cropPanel(img);
@@ -224,8 +239,13 @@ function buildRaceCard(race, status) {
       <img src="${BASE}images/${esc(race.image)}Track.webp" alt="${esc(race.name)} track layout" />
       <span class="track-label">赛道线路图</span>
     </div>
-    <button class="card-details-toggle">赛事详情图 ▾</button>`;
+    ${race.hasDetails === false ? '' : '<button class="card-details-toggle">赛事详情图 ▾</button>'}`;
+  const trackImg = card.querySelector('.card-track img');
+  trackImg.addEventListener('error', () => {
+    card.querySelector('.card-track').innerHTML = '<span class="track-missing">线路图待补——进比赛详情界面截图发我即可补上</span>';
+  });
   const btn = card.querySelector('.card-details-toggle');
+  if (!btn) return card;
   btn.addEventListener('click', () => {
     const existing = card.querySelector('.card-details');
     if (existing) {
@@ -279,8 +299,16 @@ els.debugToggle.addEventListener('click', () => {
 document.addEventListener('paste', async (e) => {
   const item = [...(e.clipboardData?.items ?? [])].find((i) => i.type.startsWith('image/'));
   if (!item) return;
+  if (engineStateUI === 'loading') {
+    showToast('模型加载中，请稍候再试', true);
+    return;
+  }
   handleImage(await fileToImage(item.getAsFile()));
 });
+
+document.addEventListener('webglcontextlost', () => {
+  getOcr().then((o) => o.failEngineNow()).catch(() => {});
+}, true);
 
 function renderManualList(hits) {
   const list = els.manualResults;

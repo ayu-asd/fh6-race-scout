@@ -917,6 +917,17 @@
       "laps": 1,
       "series": "Horizon Festival",
       "image": "RacePierPressure"
+    },
+    {
+      "name": "Soni Circuit",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceSoniCircuit",
+      "hasDetails": false
     }
   ]
 }

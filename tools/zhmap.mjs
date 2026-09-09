@@ -29,6 +29,7 @@ const M = {
   RaceHighwayCircuit: { zh: '高速公路环道赛', confidence: 'source' },
   RaceHokubuCircuit: { zh: '北部环道赛', confidence: 'source' },
   RaceIrokawaCircuit: { zh: '色川环道赛', confidence: 'source' },
+  RaceSoniCircuit: { zh: '曾尔环道赛', alt: 'ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km 3圈', confidence: 'verified' },
   RaceItoSprint: { zh: '伊东冲刺赛', confidence: 'source' },
   RaceLegendIslandCircuit: { zh: '传奇岛环道赛', confidence: 'source' },
   'RaceNarai-JukuCircuit': { zh: '奈良井宿环道赛', confidence: 'source' },
