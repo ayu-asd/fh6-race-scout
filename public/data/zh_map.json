@@ -1,5 +1,5 @@
 {
-  "note": "ForzaLabs race image key -> 游戏内简中名。四个地平线巨献: 歌莉娅(环岛)/迎战巨汉(环首都高)/苦行赛(泥地拉力)/巨人对决(越野), 经玩家游戏内核实。游戏内还有 ForzaLabs 未收录比赛(曾尔环道赛/东京铁道冲刺赛/瀑布径走赛/计时赛x5/序章等), 识别到时会出候选下拉。",
+  "note": "ForzaLabs race image key -> 游戏内简中名。四个地平线巨献: 歌莉娅(环岛)/迎战巨汉(环首都高)/苦行赛(泥地拉力)/巨人对决(越野), 经玩家游戏内核实。游戏内还有 ForzaLabs 未收录比赛(曾尔环道赛/东京铁道冲刺赛/瀑布径道赛/计时赛x5/序章等), 识别到时会出候选下拉。",
   "map": {
     "RaceCedarRun": {
       "zh": "雪松山道赛",
@@ -60,8 +60,8 @@
       "confidence": "verified"
     },
     "RaceSunflowerCharge": {
-      "zh": "向日葵攀爬赛",
-      "alt": "向日葵冲锋赛",
+      "zh": "向日葵冲锋赛",
+      "alt": "向日葵攀爬赛 (旧名)",
       "confidence": "verified"
     },
     "RaceTokyoCityDocksCharge": {
@@ -194,7 +194,7 @@
       "confidence": "verified"
     },
     "RaceAirfieldTrail": {
-      "zh": "机场径走赛",
+      "zh": "机场径道赛",
       "confidence": "source"
     },
     "RaceBambooForestScramble": {
@@ -202,7 +202,7 @@
       "confidence": "source"
     },
     "RaceCherryFieldTrail": {
-      "zh": "樱桃园径走赛",
+      "zh": "樱桃园径道赛",
       "confidence": "source"
     },
     "RaceChiheisenScramble": {
@@ -214,7 +214,7 @@
       "confidence": "verified"
     },
     "RaceHokubuTrail": {
-      "zh": "北部径走赛",
+      "zh": "北部径道赛",
       "confidence": "source"
     },
     "RaceHorizonStadiumScramble": {
@@ -227,7 +227,6 @@
     },
     "RaceItoTrail": {
       "zh": "伊东径道赛",
-      "alt": "游民星空数据作\"伊东径走赛\"",
       "confidence": "verified"
     },
     "RaceKawazuNanadaruScramble": {
@@ -235,19 +234,19 @@
       "confidence": "source"
     },
     "RaceKinkaku-jiTrail": {
-      "zh": "金阁寺径走赛",
+      "zh": "金阁寺径道赛",
       "confidence": "source"
     },
     "RaceLegendIslandTrail": {
-      "zh": "传奇岛径走赛",
+      "zh": "传奇岛径道赛",
       "confidence": "source"
     },
     "RaceNukabiraTrail": {
-      "zh": "糠平径走赛",
+      "zh": "糠平径道赛",
       "confidence": "source"
     },
     "RaceOyashirazuTrail": {
-      "zh": "亲不知径走赛",
+      "zh": "亲不知径道赛",
       "confidence": "source"
     },
     "RaceSekibeScramble": {
@@ -267,11 +266,11 @@
       "confidence": "source"
     },
     "RaceTakashiroTrail": {
-      "zh": "高城径走赛",
+      "zh": "高城径道赛",
       "confidence": "source"
     },
     "RaceWaterfallTrail": {
-      "zh": "瀑布径走赛",
+      "zh": "瀑布径道赛",
       "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km (OCR 误读: 藻布/漂布)",
       "confidence": "verified"
     },

@@ -126,7 +126,7 @@ async function handleImage(img) {
   await new Promise((r) => setTimeout(r, 50));
   try {
     const panel = cropPanel(img);
-    const b64 = panel.toDataURL('image/png');
+    const b64 = panel.canvas.toDataURL('image/png');
     const pimg = new Image();
     await new Promise((res, rej) => ((pimg.onload = res), (pimg.onerror = rej), (pimg.src = b64)));
     const t0 = performance.now();
@@ -136,7 +136,7 @@ async function handleImage(img) {
       els.rawText.hidden = false;
       els.rawText.textContent = boxes.map((b) => `[${Math.round(b.cx)},${Math.round(b.cy)}] ${b.text}`).join('\n');
     }
-    const parsed = parsePanel(boxes);
+    const parsed = parsePanel(boxes, panel.scale);
     if (!parsed.length) {
       hideProgress();
       els.results.innerHTML = '<p class="warn-note">未识别到比赛信息——请确认截图包含左侧比赛列表，或用下方手动查询。</p>';
@@ -175,7 +175,7 @@ function cropPanel(img) {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
   ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
-  return c;
+  return { canvas: c, scale };
 }
 
 function showProgress(text) {

@@ -27,7 +27,7 @@ const CJK_NAME_RE = /^[\u4e00-\u9fa5（）()·]{2,16}$/;
 const HEADER_RE = /正在加入|赛事报名|报名中$|乐玩/;
 const KM_RE = /(\d{1,2}(?:\.\d)?)\s*[千干辛羊芊午年]?[米毛]/;
 const LAPS_RE = /[-·.,，。]\s*(\d)\s*圈$|(\d)\s*圈$/;
-const STATUS_RE = /^(进行中|进行|下一步|下步|报名中|报名|已结束|已报名|报名即将开始)$/;
+const STATUS_RE = /^(进行中|进行|下[-—–－一]?步|报名中|报名|已完成|未完成|未开始|待开始|已结束|已报名|报名即将开始|即将开始|即将结束)$/;
 const WEATHER_RE = /^((春|夏|秋|冬)季|夜[晚间]|白[天昼]|清晨|早晨|上午|中午|下午|傍[晚清早]|黄昏|拂晓|黎明|日出|日落|午[夜后]?|深夜|正午|晴朗|睛朗|多云|阴天|阳天|雨天|小雨|大雨|暴雨|阵[雨雨]|雷[阵雨]*|降水|弱降水|强降水|雨后|雪天?|雾天?|干爽|湿热|炎热|严寒|凉爽)$/;
 const NOISE_RE = /[a-zA-Z0-9\/：:点季第]|千米$/;
 
@@ -56,15 +56,16 @@ export function classify(box) {
   return 'noise';
 }
 
-export function parsePanel(boxes) {
+export function parsePanel(boxes, scale = 1) {
   const sorted = [...boxes].sort((a, b) => a.cy - b.cy || a.cx - b.cx);
   const records = [];
   let cur = null;
+  const tol = 90 * scale;
   const close = () => {
     if (cur) records.push(cur);
     cur = null;
   };
-  const sameLine = (cy) => Math.abs(cy - (cur.nameCy ?? cur.cy)) < 90;
+  const sameLine = (cy) => Math.abs(cy - (cur.nameCy ?? cur.cy)) < tol;
   for (const box of sorted) {
     const c = classify(box);
     if (c === 'noise') continue;
