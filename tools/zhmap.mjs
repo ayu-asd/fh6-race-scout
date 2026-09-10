@@ -6,7 +6,7 @@ const outPath = join(import.meta.dirname, '..', 'public', 'data', 'zh_map.json')
 // confidence: verified=玩家游戏内实锤 | source=游民星空地图数据 | conflict=多来源分歧已由玩家裁决
 const M = {
   // ---- 街头赛 (15) ---- [玩家裁决: 采用右列]
-  RaceCedarRun: { zh: '雪松竞速', alt: '杉树奔袭赛', confidence: 'verified' },
+  RaceCedarRun: { zh: '雪松山道赛', alt: '雪松竞速/杉树奔袭赛 (旧查询名)', confidence: 'verified' },
   RaceDaikokuChase: { zh: '大黑追逐赛', confidence: 'source' },
   RaceFestivalChase: { zh: '嘉年华追逐赛', confidence: 'source' },
   RaceHokubuAscent: { zh: '北部上坡赛', alt: '北部爬坡赛', confidence: 'verified' },
@@ -30,6 +30,7 @@ const M = {
   RaceHokubuCircuit: { zh: '北部环道赛', confidence: 'source' },
   RaceIrokawaCircuit: { zh: '色川环道赛', confidence: 'source' },
   RaceSoniCircuit: { zh: '曾尔环道赛', alt: 'ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km 3圈', confidence: 'verified' },
+  RaceTokyoRailwaySprint: { zh: '东京铁道冲刺赛', alt: 'ForzaLabs 未收录, 玩家游戏内截图实锤 6.8km', confidence: 'verified' },
   RaceItoSprint: { zh: '伊东冲刺赛', confidence: 'source' },
   RaceLegendIslandCircuit: { zh: '传奇岛环道赛', confidence: 'source' },
   'RaceNarai-JukuCircuit': { zh: '奈良井宿环道赛', confidence: 'source' },
@@ -73,6 +74,7 @@ const M = {
   RaceSunflowerScramble: { zh: '向日葵攀爬赛', confidence: 'source' },
   RaceTaiyakiScramble: { zh: '鲷鱼烧攀爬赛', confidence: 'source' },
   RaceTakashiroTrail: { zh: '高城径走赛', confidence: 'source' },
+  RaceWaterfallTrail: { zh: '瀑布径走赛', alt: 'ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km (OCR 误读: 藻布/漂布)', confidence: 'verified' },
   RaceGauntlet: { zh: '苦行赛', alt: '险途/挑战赛(攻略译名), 泥地拉力 30.1km', confidence: 'verified' },
   // ---- 越野赛 (18) ----
   RaceCityDocksCrossCountryCircuit: { zh: '城市码头越野环道赛', alt: '索道疾驰?', confidence: 'verified' },
@@ -85,6 +87,7 @@ const M = {
   'RaceRuriko-jiCrossCountry': { zh: '琉璃光寺越野赛', confidence: 'source' },
   RaceShimanoyamaCrossCountry: { zh: '霜山越野赛', confidence: 'source' },
   RaceShinjukuGyoenCrossCountry: { zh: '新宿御苑越野赛', confidence: 'source' },
+  RaceStadiumCrossCountryCircuit: { zh: '体育场越野环道赛', alt: 'ForzaLabs 未收录, 玩家游戏内截图实锤 9.7km 3圈', confidence: 'verified' },
   RaceSnowForestCrossCountryCircuit: { zh: '雪林越野环道赛', confidence: 'source' },
   RaceSoniHighlandsCrossCountry: { zh: '曾尔高地越野赛', confidence: 'source' },
   RaceTakashiroCrossCountry: { zh: '高城越野赛', confidence: 'source' },

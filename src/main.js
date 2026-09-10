@@ -167,11 +167,14 @@ function cropPanel(img) {
   const sy = Math.round(y1 * img.naturalHeight);
   const sw = Math.round((x2 - x1) * img.naturalWidth);
   const sh = Math.round((y2 - y1) * img.naturalHeight);
-  const scale = Math.min(1, 1600 / sw);
+  const scale = Math.min(2, 2560 / sw);
   const c = document.createElement('canvas');
   c.width = Math.round(sw * scale);
   c.height = Math.round(sh * scale);
-  c.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
+  const ctx = c.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
   return c;
 }
 

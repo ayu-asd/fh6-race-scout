@@ -928,6 +928,39 @@
       "series": "Horizon Festival",
       "image": "RaceSoniCircuit",
       "hasDetails": false
+    },
+    {
+      "name": "Waterfall Trail",
+      "category": "Dirt Races",
+      "categoryZh": "泥地竞速赛",
+      "mi": 3.6,
+      "km": 5.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceWaterfallTrail",
+      "hasDetails": false
+    },
+    {
+      "name": "Tokyo Railway Sprint",
+      "category": "Road Races",
+      "categoryZh": "公路赛",
+      "mi": 4.2,
+      "km": 6.8,
+      "laps": 1,
+      "series": "Horizon Festival",
+      "image": "RaceTokyoRailwaySprint",
+      "hasDetails": false
+    },
+    {
+      "name": "Stadium Cross Country Circuit",
+      "category": "Cross Country Races",
+      "categoryZh": "越野赛",
+      "mi": 6,
+      "km": 9.7,
+      "laps": 3,
+      "series": "Horizon Festival",
+      "image": "RaceStadiumCrossCountryCircuit",
+      "hasDetails": false
     }
   ]
 }

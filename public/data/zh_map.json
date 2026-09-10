@@ -2,8 +2,8 @@
   "note": "ForzaLabs race image key -> 游戏内简中名。四个地平线巨献: 歌莉娅(环岛)/迎战巨汉(环首都高)/苦行赛(泥地拉力)/巨人对决(越野), 经玩家游戏内核实。游戏内还有 ForzaLabs 未收录比赛(曾尔环道赛/东京铁道冲刺赛/瀑布径走赛/计时赛x5/序章等), 识别到时会出候选下拉。",
   "map": {
     "RaceCedarRun": {
-      "zh": "雪松竞速",
-      "alt": "杉树奔袭赛",
+      "zh": "雪松山道赛",
+      "alt": "雪松竞速/杉树奔袭赛 (旧查询名)",
       "confidence": "verified"
     },
     "RaceDaikokuChase": {
@@ -100,6 +100,11 @@
     "RaceSoniCircuit": {
       "zh": "曾尔环道赛",
       "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km 3圈",
+      "confidence": "verified"
+    },
+    "RaceTokyoRailwaySprint": {
+      "zh": "东京铁道冲刺赛",
+      "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 6.8km",
       "confidence": "verified"
     },
     "RaceItoSprint": {
@@ -265,6 +270,11 @@
       "zh": "高城径走赛",
       "confidence": "source"
     },
+    "RaceWaterfallTrail": {
+      "zh": "瀑布径走赛",
+      "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 5.8km (OCR 误读: 藻布/漂布)",
+      "confidence": "verified"
+    },
     "RaceGauntlet": {
       "zh": "苦行赛",
       "alt": "险途/挑战赛(攻略译名), 泥地拉力 30.1km",
@@ -310,6 +320,11 @@
     "RaceShinjukuGyoenCrossCountry": {
       "zh": "新宿御苑越野赛",
       "confidence": "source"
+    },
+    "RaceStadiumCrossCountryCircuit": {
+      "zh": "体育场越野环道赛",
+      "alt": "ForzaLabs 未收录, 玩家游戏内截图实锤 9.7km 3圈",
+      "confidence": "verified"
     },
     "RaceSnowForestCrossCountryCircuit": {
       "zh": "雪林越野环道赛",
