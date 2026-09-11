@@ -1,11 +1,9 @@
 import { create as createPond, registerPlugin } from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
-import { parsePanel, matchRecords } from './match.js';
+import { matchRecords } from './match.js';
 
 registerPlugin(FilePondPluginFileValidateType);
-
-const getOcr = async () => import('./ocr.js');
 
 const BASE = import.meta.env.BASE_URL;
 const CROP = { x1: 0.138, x2: 0.617, y1: 0.18, y2: 0.535 };
@@ -16,7 +14,6 @@ const els = {
   preview: $('preview'), shotInfo: $('shot-info'), resetBtn: $('reset-btn'),
   results: $('results'), progress: $('progress'), progressText: $('progress-text'),
   toast: $('toast'), engineStatus: $('engine-status'), debugToggle: $('debug-toggle'),
-  uploadBlock: $('upload-block'),
   rawText: $('raw-text'), manualWrap: $('manual-wrap'), manualSearch: $('manual-search'),
   manualResults: $('manual-results'),
   sampleModal: $('sample-modal'), sampleBtn: $('sample-btn'), sampleClose: $('sample-close'),
@@ -33,11 +30,6 @@ const pond = createPond(els.fileInput, {
   labelTapToCancel: '点击取消',
   onaddfile: async (err, item) => {
     if (err) return;
-    if (engineStateUI === 'loading') {
-      showToast('模型加载中，请稍候再试', true);
-      pond.removeFiles();
-      return;
-    }
     const f = item.file;
     setTimeout(() => pond.removeFiles(), 60);
     handleImage(await fileToImage(f));
@@ -58,21 +50,8 @@ function showToast(msg, isError = false) {
   showToast._t = setTimeout(() => (els.toast.hidden = true), isError ? 5000 : 2600);
 }
 
-let engineStateUI = 'idle';
-
-function setEngineStatus(state) {
-  engineStateUI = state;
-  els.engineStatus.textContent = { idle: '模型未加载', loading: '模型加载中…', ready: '● 识别引擎就绪', error: '模型加载失败' }[state] ?? state;
-  els.engineStatus.className = `status-dot ${state}`;
-  els.uploadBlock.hidden = state === 'ready' || state === 'error';
-}
-
-els.engineStatus.addEventListener('click', () => {
-  if (engineStateUI !== 'error') return;
-  getOcr().then((o) => o.loadEngine(setEngineStatus)).catch((e) => showToast(`模型加载失败: ${e.message}`, true));
-});
-
-getOcr().then((o) => o.loadEngine(setEngineStatus)).catch((e) => showToast(`模型加载失败: ${e.message}`, true));
+els.engineStatus.textContent = '● 云端识别就绪';
+els.engineStatus.className = 'status-dot ready';
 
 async function loadData() {
   const [r, z] = await Promise.all([
@@ -111,32 +90,28 @@ async function handleImage(img) {
   els.shotInfo.textContent = `${img.naturalWidth}×${img.naturalHeight}`;
   drawPreview(img);
 
-  showProgress('加载识别模型…');
-  let ocr;
-  try {
-    ocr = await getOcr();
-    await ocr.loadEngine(setEngineStatus);
-  } catch (e) {
-    hideProgress();
-    showToast(`引擎加载失败: ${e.message}`, true);
-    return;
-  }
-
-  showProgress('OCR 识别中…');
-  await new Promise((r) => setTimeout(r, 50));
+  showProgress('云端识别中…');
+  await new Promise((r) => setTimeout(r, 30));
   try {
     const panel = cropPanel(img);
-    const b64 = panel.canvas.toDataURL('image/png');
-    const pimg = new Image();
-    await new Promise((res, rej) => ((pimg.onload = res), (pimg.onerror = rej), (pimg.src = b64)));
+    const image = encodeCrop(panel.canvas);
     const t0 = performance.now();
-    const boxes = await ocr.recognize(pimg);
+    const resp = await fetch(`${BASE}api/ocr`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image }),
+    });
+    const json = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(json.error || `请求失败 (${resp.status})`);
+    const text = json.text || '';
     const ms = Math.round(performance.now() - t0);
     if (debug) {
       els.rawText.hidden = false;
-      els.rawText.textContent = boxes.map((b) => `[${Math.round(b.cx)},${Math.round(b.cy)}] ${b.text}`).join('\n');
+      const kb = Math.round((image.length - image.indexOf(',')) * 0.75 / 1024);
+      const fmt = image.startsWith('data:image/webp') ? 'webp' : 'jpeg';
+      els.rawText.textContent = `[裁剪 ${panel.canvas.width}×${panel.canvas.height} · 上传 ${kb}KB ${fmt} · 识别 ${ms}ms]\n${text}`;
     }
-    const parsed = parsePanel(boxes, panel.scale);
+    const parsed = parseAgnes(text);
     if (!parsed.length) {
       hideProgress();
       els.results.innerHTML = '<p class="warn-note">未识别到比赛信息——请确认截图包含左侧比赛列表，或用下方手动查询。</p>';
@@ -161,13 +136,42 @@ async function handleImage(img) {
   hideProgress();
 }
 
+function encodeCrop(canvas) {
+  let data = canvas.toDataURL('image/webp', 0.9);
+  if (!data.startsWith('data:image/webp')) data = canvas.toDataURL('image/jpeg', 0.85);
+  return data;
+}
+
+function parseAgnes(text) {
+  const records = [];
+  for (const raw of String(text).split(/\r?\n/)) {
+    const line = raw.replace(/^[\s\-*>・•\d.、)]+/, '').trim();
+    if (!line) continue;
+    const parts = line.split(/[|｜]/).map((s) => s.trim());
+    if (parts.length < 2) continue;
+    const name = parts[0].replace(/[\s*`]/g, '');
+    if (!/^[\u4e00-\u9fa5]{2,16}$/.test(name)) continue;
+    const kmMatch = (parts[1] ?? '').match(/(\d+(?:\.\d+)?)/);
+    const lapMatch = (parts[2] ?? '').match(/(\d+)/);
+    records.push({
+      name,
+      km: kmMatch ? parseFloat(kmMatch[1]) : null,
+      kmDot: true,
+      laps: lapMatch ? parseInt(lapMatch[1], 10) : null,
+      status: null,
+      order: records.length,
+    });
+  }
+  return records;
+}
+
 function cropPanel(img) {
   const { x1, x2, y1, y2 } = CROP;
   const sx = Math.round(x1 * img.naturalWidth);
   const sy = Math.round(y1 * img.naturalHeight);
   const sw = Math.round((x2 - x1) * img.naturalWidth);
   const sh = Math.round((y2 - y1) * img.naturalHeight);
-  const scale = Math.min(2, 2560 / sw);
+  const scale = Math.min(1, 1600 / sw);
   const c = document.createElement('canvas');
   c.width = Math.round(sw * scale);
   c.height = Math.round(sh * scale);
@@ -302,16 +306,8 @@ els.debugToggle.addEventListener('click', () => {
 document.addEventListener('paste', async (e) => {
   const item = [...(e.clipboardData?.items ?? [])].find((i) => i.type.startsWith('image/'));
   if (!item) return;
-  if (engineStateUI === 'loading') {
-    showToast('模型加载中，请稍候再试', true);
-    return;
-  }
   handleImage(await fileToImage(item.getAsFile()));
 });
-
-document.addEventListener('webglcontextlost', () => {
-  getOcr().then((o) => o.failEngineNow()).catch(() => {});
-}, true);
 
 function renderManualList(hits) {
   const list = els.manualResults;

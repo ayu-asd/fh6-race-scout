@@ -8,11 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "extract": "node tools/extract.mjs",
-    "fetchmodels": "node tools/fetchmodels.mjs",
     "copyimages": "node tools/copyimages.mjs"
   },
   "dependencies": {
-    "@paddle-js-models/ocr": "^4.1.1",
     "filepond": "^4.32.12",
     "filepond-plugin-file-validate-type": "^1.2.9"
   },
