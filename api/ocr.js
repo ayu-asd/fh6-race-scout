@@ -1,4 +1,4 @@
-import { recognizeViaAgnes } from '../server/agnes.mjs';
+import { recognizeRaceList } from '../server/ocr.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const text = await recognizeViaAgnes(image);
+    const text = await recognizeRaceList(image);
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ text });
   } catch (e) {

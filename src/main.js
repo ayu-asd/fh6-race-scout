@@ -111,7 +111,7 @@ async function handleImage(img) {
       const fmt = image.startsWith('data:image/webp') ? 'webp' : 'jpeg';
       els.rawText.textContent = `[裁剪 ${panel.canvas.width}×${panel.canvas.height} · 上传 ${kb}KB ${fmt} · 识别 ${ms}ms]\n${text}`;
     }
-    const parsed = parseAgnes(text);
+    const parsed = parseRaces(text);
     if (!parsed.length) {
       hideProgress();
       els.results.innerHTML = '<p class="warn-note">未识别到比赛信息——请确认截图包含左侧比赛列表，或用下方手动查询。</p>';
@@ -142,7 +142,7 @@ function encodeCrop(canvas) {
   return data;
 }
 
-function parseAgnes(text) {
+function parseRaces(text) {
   const records = [];
   for (const raw of String(text).split(/\r?\n/)) {
     const line = raw.replace(/^[\s\-*>・•\d.、)]+/, '').trim();

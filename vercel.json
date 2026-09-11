@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["hkg1"],
+  "functions": { "api/ocr.js": { "maxDuration": 60 } },
   "headers": [
     {
       "source": "/images/(.*\\.webp)",
