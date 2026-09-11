@@ -4,6 +4,10 @@
   "functions": { "api/ocr.js": { "maxDuration": 60 } },
   "headers": [
     {
+      "source": "/sample-screenshot.webp",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    },
+    {
       "source": "/images/(.*\\.webp)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },

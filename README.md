@@ -43,7 +43,11 @@ npm install
 echo "SILICONFLOW_API_KEY=你的key" > .env   # 本地开发用；生产配 Vercel 环境变量
 npm run dev        # http://127.0.0.1:5173（vite 中间件本地模拟 /api/ocr）
 npm run build      # 产物在 dist/
+npm run e2e        # 10 张截图端到端回归（默认打本地 5173，需先 npm run dev）
+npm run e2e -- --base=https://fh6.hr1.cc.cd   # 打线上
 ```
+
+端到端测试用 `tools/e2e.mjs`：`test/fixtures/` 里 10 张截图覆盖 30 场互不重复的赛事，逐张断言识别出的中文赛事名。用 `playwright-core` 驱动本机 Chrome（`CHROME_PATH` 可覆盖路径），不下载浏览器。
 
 数据管线（仅数据更新时需要）：
 
@@ -61,7 +65,7 @@ Vercel 部署（前端静态 + 一个 Serverless Function）：
 2. 环境变量里加 `SILICONFLOW_API_KEY`（从 SiliconFlow 控制台获取；不要写进前端代码）
 3. 部署即可；`/api/ocr` 由 `api/ocr.js` 提供，自动成为 Serverless Function，密钥只在服务端
 
-`vercel.json` 已配置图片/静态资源长缓存。
+`vercel.json` 已配置静态资源长缓存（赛道图 / 示例截图走 Vercel CDN，命中边缘节点后 `x-vercel-cache: HIT`）。
 
 ## 数据来源
 

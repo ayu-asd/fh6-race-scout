@@ -8,13 +8,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "extract": "node tools/extract.mjs",
-    "copyimages": "node tools/copyimages.mjs"
+    "copyimages": "node tools/copyimages.mjs",
+    "e2e": "node tools/e2e.mjs"
   },
   "dependencies": {
     "filepond": "^4.32.12",
     "filepond-plugin-file-validate-type": "^1.2.9"
   },
   "devDependencies": {
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "playwright-core": "^1.63.0"
   }
 }

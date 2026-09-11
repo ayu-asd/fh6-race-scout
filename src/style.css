@@ -34,14 +34,11 @@ header {
 }
 
 header h1 { font-size: 18px; letter-spacing: 1px; }
-header h1 b { color: var(--accent); }
 
 .header-right { display: flex; align-items: center; gap: 12px; }
 
 .status-dot { font-size: 12px; color: var(--dim); }
 .status-dot.ready { color: var(--ok); }
-.status-dot.loading { color: var(--warn); }
-.status-dot.error { color: var(--err); }
 
 button.ghost {
   background: transparent;

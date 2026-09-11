@@ -35,12 +35,12 @@ const pond = createPond(els.fileInput, {
     handleImage(await fileToImage(f));
   },
 });
-window.__pond = pond;
 
 let races = [];
 let zhMap = {};
 let debug = false;
 let currentImg = null;
+let seq = 0;
 
 function showToast(msg, isError = false) {
   els.toast.textContent = msg;
@@ -83,6 +83,7 @@ function drawPreview(img) {
 }
 
 async function handleImage(img) {
+  const my = ++seq;
   currentImg = img;
   els.previewWrap.hidden = false;
   els.results.hidden = false;
@@ -102,6 +103,7 @@ async function handleImage(img) {
       body: JSON.stringify({ image }),
     });
     const json = await resp.json().catch(() => ({}));
+    if (my !== seq) return;
     if (!resp.ok) throw new Error(json.error || `请求失败 (${resp.status})`);
     const text = json.text || '';
     const ms = Math.round(performance.now() - t0);
@@ -129,11 +131,12 @@ async function handleImage(img) {
     }
     renderCards(matched, ms);
   } catch (e) {
+    if (my !== seq) return;
     console.error(e);
     showToast(`识别失败: ${e.message || e}`, true);
     els.results.innerHTML = '<p class="warn-note">识别失败，可尝试重新粘贴或使用手动查询。</p>';
   }
-  hideProgress();
+  if (my === seq) hideProgress();
 }
 
 function encodeCrop(canvas) {
@@ -147,12 +150,27 @@ function parseRaces(text) {
   for (const raw of String(text).split(/\r?\n/)) {
     const line = raw.replace(/^[\s\-*>・•\d.、)]+/, '').trim();
     if (!line) continue;
-    const parts = line.split(/[|｜]/).map((s) => s.trim());
-    if (parts.length < 2) continue;
-    const name = parts[0].replace(/[\s*`]/g, '');
+    let name;
+    let kmStr = '';
+    let lapStr = '';
+    if (/[|｜]/.test(line)) {
+      const parts = line.split(/[|｜]/).map((s) => s.trim());
+      name = parts[0];
+      kmStr = parts[1] ?? '';
+      lapStr = parts[2] ?? '';
+    } else {
+      if (/正在加入|赛事报名|乐玩|列表/.test(line)) continue;
+      const m = line.match(/^([\u4e00-\u9fa5（）()·]{2,16})/);
+      if (!m) continue;
+      name = m[1];
+      const rest = line.slice(m[1].length);
+      kmStr = rest.match(/(\d+(?:\.\d+)?)\s*(?:千米|公里|km)/i)?.[1] ?? rest.match(/(\d+(?:\.\d+)?)/)?.[1] ?? '';
+      lapStr = rest.match(/(\d)\s*圈/)?.[1] ?? '';
+    }
+    name = name.replace(/[\s*`]/g, '');
     if (!/^[\u4e00-\u9fa5]{2,16}$/.test(name)) continue;
-    const kmMatch = (parts[1] ?? '').match(/(\d+(?:\.\d+)?)/);
-    const lapMatch = (parts[2] ?? '').match(/(\d+)/);
+    const kmMatch = kmStr.match(/(\d+(?:\.\d+)?)/);
+    const lapMatch = lapStr.match(/(\d+)/);
     records.push({
       name,
       km: kmMatch ? parseFloat(kmMatch[1]) : null,
@@ -380,9 +398,4 @@ els.sampleModal.addEventListener('click', (e) => {
 (async () => {
   await loadData();
   races.forEach((r) => (r.zh = zhMap?.[r.image]?.zh ?? null));
-  window.__fh6DemoLowConfidence = (records) => {
-    els.previewWrap.hidden = true;
-    els.results.hidden = false;
-    renderCards(matchRecords(records ?? [{ name: null, km: 7.9, laps: 3, status: '报名中', order: 0 }], races, zhMap), 0);
-  };
 })();
