@@ -21,6 +21,7 @@ const els = {
 
 const pond = createPond(els.fileInput, {
   allowMultiple: false,
+  allowPaste: false,
   credits: false,
   acceptedFileTypes: ['image/*'],
   labelIdle: '拖入图片，或 <span class="filepond--label-action">点击选择文件</span>，或直接 <strong>Ctrl+V</strong> 粘贴截图',
