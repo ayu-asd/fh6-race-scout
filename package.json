@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "ocr": "node tools/ocr-check.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "extract": "node tools/extract.mjs",

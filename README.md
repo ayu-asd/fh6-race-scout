@@ -7,7 +7,7 @@
 ## 功能
 
 - **Ctrl+V / 拖拽 / 点击选择**（FilePond 组件）粘贴赛事报名界面全屏截图（支持任意分辨率，按百分比裁剪左侧列表）
-- **云端多模态识别**（SiliconFlow · Qwen3.5-4B）：只上传裁剪后的列表区（WebP 约 44KB），识别约 1 秒，不受本机显卡占用影响
+- **云端多模态识别**（三路并发：Agnes国区 + Agnes国际 + Qwen，谁先成功用谁）：只上传裁剪后的列表区（WebP 约 44KB），识别典型 2~4 秒，不受本机显卡占用影响
 - **三重加权匹配**：识别出的中文名 + 千米数 + 圈数，对照 92 场赛事数据自动纠错
 - 三张卡片展示：中文赛事名 + 赛道线路图 + 可展开的赛事详情图 + 千米/圈数/状态
 - **手动查询**：全量 92 场搜索（支持中文/英文/分类），找不到时的兜底
@@ -20,17 +20,27 @@
 2. 回到本页 `Ctrl+V`
 3. 点开“示例截图”按钮可查看什么样截图是有效的
 
+## 识别后端
+
+| 后端 | 端点 |
+|---|---|
+| Agnes 3.0 Flash（国区） | `https://api.agnes-ai.cn` |
+| Agnes 3.0 Flash（国际站） | `https://apihub.agnes-ai.com` |
+| Qwen3.5-4B | `https://api.siliconflow.cn`（硅基流动） |
+
+**三路并发**：每次识别同时请求三家（单次 15s 上限），谁先成功用谁，其余中止；全部失败自动再试一轮（跳过密钥无效的）。实测典型 2~4s（Qwen 通常先出），拥堵窗口由其它家接住。密钥只存服务端（`AGNES_CN_API_KEY` / `AGNES_API_KEY` / `SILICONFLOW_API_KEY`），函数区域 `sin1`（新加坡）。
+
 ## 识别原理
 
 ```
 整屏截图
   → 按百分比裁剪比赛列表面板 (x: 13.8%~61.7%, y: 18%~53.5%)
   → base64 上传 /api/ocr（Vercel Serverless Function，密钥只在服务端）
-  → Qwen3.5-4B（关闭思考）返回结构化文本：名称|千米|圈数（每行一场）
+  → 三路并发（Agnes国区 + Agnes国际 + Qwen，15s 上限）谁先成功用谁，返回结构化文本：名称|千米|圈数（每行一场）
   → 解析每行 → 加权打分匹配 races.json (92 场)：
-       名称相似度(归一化编辑距离)×0.7 + 千米一致×0.2 + 圈数一致×0.1
-       ≥55% → 取最高分自动出卡
-       <55% → 该行变候选卡，展示打分前 6 名人工点选
+        名称相似度(归一化编辑距离)×0.7 + 千米一致×0.2 + 圈数一致×0.1
+        ≥55% → 取最高分自动出卡
+        <55% → 该行变候选卡，展示打分前 6 名人工点选
   → 垃圾过滤：名称与全部 92 场相似度都 <0.35 且无千米数的行整条丢弃
 ```
 
@@ -40,7 +50,10 @@
 
 ```bash
 npm install
-echo "SILICONFLOW_API_KEY=你的key" > .env   # 本地开发用；生产配 Vercel 环境变量
+# 本地开发用；生产配 Vercel 环境变量（三家都配就三路并发，只配一家就单家）
+echo "AGNES_API_KEY=你的key" > .env            # Agnes 国际站
+echo "AGNES_CN_API_KEY=你的key" >> .env        # Agnes 国区（可选）
+echo "SILICONFLOW_API_KEY=你的key" >> .env     # Qwen 硅基流动（可选）
 npm run dev        # http://127.0.0.1:5173（vite 中间件本地模拟 /api/ocr）
 npm run build      # 产物在 dist/
 npm run e2e        # 10 张截图端到端回归（默认打本地 5173，需先 npm run dev）
@@ -62,7 +75,7 @@ node tools/copyimages.mjs  # 复制赛道图 → public/images/
 Vercel 部署（前端静态 + 一个 Serverless Function）：
 
 1. 导入仓库，Root Directory 选本项目
-2. 环境变量里加 `SILICONFLOW_API_KEY`（从 SiliconFlow 控制台获取；不要写进前端代码）
+2. 环境变量里加 `AGNES_API_KEY`（国际站）+ `AGNES_CN_API_KEY`（国区，可选）+ `SILICONFLOW_API_KEY`（硅基流动）
 3. 部署即可；`/api/ocr` 由 `api/ocr.js` 提供，自动成为 Serverless Function，密钥只在服务端
 
 `vercel.json` 已配置静态资源长缓存（赛道图 / 示例截图走 Vercel CDN，命中边缘节点后 `x-vercel-cache: HIT`）。

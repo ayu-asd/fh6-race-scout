@@ -107,12 +107,13 @@ async function handleImage(img) {
     if (my !== seq) return;
     if (!resp.ok) throw new Error(json.error || `请求失败 (${resp.status})`);
     const text = json.text || '';
+    const provider = json.provider || '';
     const ms = Math.round(performance.now() - t0);
     if (debug) {
       els.rawText.hidden = false;
       const kb = Math.round((image.length - image.indexOf(',')) * 0.75 / 1024);
       const fmt = image.startsWith('data:image/webp') ? 'webp' : 'jpeg';
-      els.rawText.textContent = `[裁剪 ${panel.canvas.width}×${panel.canvas.height} · 上传 ${kb}KB ${fmt} · 识别 ${ms}ms]\n${text}`;
+      els.rawText.textContent = `[裁剪 ${panel.canvas.width}×${panel.canvas.height} · 上传 ${kb}KB ${fmt} · 识别 ${ms}ms${provider ? ` · ${provider}` : ''}]\n${text}`;
     }
     const parsed = parseRaces(text);
     if (!parsed.length) {
@@ -130,7 +131,7 @@ async function handleImage(img) {
       const withKm = matched.filter((m) => m.record.km != null);
       matched = (withKm.length >= 3 ? withKm : matched).slice(0, 3);
     }
-    renderCards(matched, ms);
+    renderCards(matched, ms, provider);
   } catch (e) {
     if (my !== seq) return;
     console.error(e);
@@ -293,7 +294,7 @@ function rerenderCard(card, race, record) {
   card.replaceWith(fresh);
 }
 
-function renderCards(matched, ms) {
+function renderCards(matched, ms, provider) {
   els.results.innerHTML = '';
   const wrap = document.createElement('div');
   wrap.className = 'cards';
@@ -302,7 +303,7 @@ function renderCards(matched, ms) {
   const low = matched.filter((m) => !m.race).length;
   const note = document.createElement('p');
   note.className = 'warn-note';
-  note.textContent = `${matched.length} 场 · OCR ${ms}ms${low ? ` · ${low} 场需人工确认` : ' · 全部匹配成功'}`;
+  note.textContent = `${matched.length} 场 · OCR ${ms}ms${provider ? ` · ${provider}` : ''}${low ? ` · ${low} 场需人工确认` : ' · 全部匹配成功'}`;
   els.results.appendChild(note);
 }
 

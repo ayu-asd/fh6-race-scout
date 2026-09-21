@@ -58,7 +58,7 @@ for (const c of CASES) {
         return n && /场/.test(n.textContent) && n.textContent !== p;
       },
       prev,
-      { timeout: 60000 }
+      { timeout: 180000 }
     );
   } catch {
     failed.push(c.img);
@@ -83,3 +83,4 @@ for (const c of CASES) {
 await browser.close();
 console.log(`\n${pass}/${CASES.length} passed${failed.length ? ` · failed: ${failed.join(', ')}` : ''}`);
 process.exit(failed.length ? 1 : 0);
+

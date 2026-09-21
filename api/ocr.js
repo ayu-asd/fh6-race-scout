@@ -11,9 +11,9 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const text = await recognizeRaceList(image);
+    const { text, label } = await recognizeRaceList(image);
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json({ text });
+    res.status(200).json({ text, provider: label });
   } catch (e) {
     const status = e.code === 'NO_KEY' ? 500 : e.code === 'BAD_IMAGE' ? 400 : 502;
     res.status(status).json({ error: e.message });
